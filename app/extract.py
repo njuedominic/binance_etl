@@ -34,6 +34,7 @@ def extract_binance_price(symbol: str) -> dict:
             "success": True,
             "symbol": data["symbol"],
             "price": float(data["price"]),
+            "timestamp": data.get("time", None),
         }
     except requests.exceptions.RequestException as e:
         return {

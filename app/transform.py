@@ -1,27 +1,17 @@
 from datetime import datetime, timezone
-import pandas as pd
 
-def transform_data(raw_data:dict) -> pd.DataFrame:
-    """
-    Transform the raw data into a pandas DataFrame.
-
-    Args:
-        raw_data (dict): The raw data dictionary containing 'symbol' and 'price'.
-
-    Returns:
-        pd.DataFrame: A DataFrame with columns 'symbol', 'price', and 'timestamp'.
-    """
-    try:
-        if not raw_data.get("success", True):
-            return pd.DataFrame()
-
-        return pd.DataFrame(
-            [{
-                "symbol": str(raw_data["symbol"]),
-                "price": float(raw_data["price"]),
-                "extracted_at": datetime.now(timezone.utc),
-            }]
-        )
-
-    except (KeyError, TypeError, ValueError):
-        return pd.DataFrame()
+def transform_data(prices: dict[str, float], rate: float) -> list[dict]:
+    print("[TRANSFORM] Calculating approximate KES value...")
+    transformed = []
+    timestamp = datetime.now(timezone.utc).isoformat()
+    for symbol, usdt_price in prices.items():
+        transformed.append({
+            "symbol": symbol,
+            "price_usdt": usdt_price,
+            "usd_kes_rate": rate,
+            "price_kes": round(usdt_price * rate, 2),
+            "source": "binance",
+            "status": "success",
+            "extracted_at": timestamp
+        })
+    return transformed

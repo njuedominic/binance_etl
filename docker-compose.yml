@@ -1,0 +1,8 @@
+services:
+  etl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["--symbol", "ETHUSDT"]

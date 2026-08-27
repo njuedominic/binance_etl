@@ -1,7 +1,7 @@
-FROM python:3.11-slim
+FROM python:3.12-slim-trixie
 
 #copy uv binary from offcial image
-COPY --from=ghcr.io.astral-sh/uv:latest /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ ENV UV_COMPILE_BYTECODE=1 \
 COPY pyproject.toml uv.lock ./
 
 # Install project dependencies
-RUN --mount=type=cache, target=/root/ .cache.uv \
+RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-install-project
 
 # Copy the application's source code

@@ -16,7 +16,7 @@ def load_table(data: list[dict]):
         print(f"Symbol:            {row['symbol']}")
         print(f"Price USDT:        ${row['price_usdt']:,.2f}")
         print(f"USD/KES Rate:      {row['usd_kes_rate']:.2f}")
-        print(f"Approx. Price KES: KSh {row['price_kes']:,.2f}")
+        print(f"Approx. Price in KES: KSh {row['price_kes']:,.2f}")
         print("--------------------------------------------------")
         print(f"Source: {row['source'].capitalize()}")
         print(f"Status: {row['status'].upper()}")
